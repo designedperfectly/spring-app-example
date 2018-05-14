@@ -1,0 +1,61 @@
+<html>
+<head>
+    <title>Validate Login</title>
+
+    <script language="javascript">
+
+		window.addEventListener("load", function () {
+		  function sendData() {
+		    var XHR = new XMLHttpRequest();
+		
+		    // Bind FormData object and form element
+		    var FD = new FormData(form);
+
+		    // Setup data submission success event
+		    XHR.addEventListener("load", function(event) {
+		      displayResponse(event);
+		    });
+
+		    // Setup error event
+		    XHR.addEventListener("error", function(event) {
+		      alert('Error.');
+		    });
+
+		    // Setup HTTP request
+		    XHR.open('POST', '/passwd');
+
+		    // The data sent is what the user provided in the form
+		    XHR.send(FD);
+		  }
+
+		  function displayResponse(event) {
+		      document.getElementById('validationResponse').innerHTML = event.target.responseText;
+		  }
+	
+		  // Access form element...
+		  var form = document.getElementById("passwdForm");
+
+		  // ...and create new submit event.
+		  form.addEventListener("submit", function (event) {
+		    event.preventDefault();
+
+		    sendData();
+		  });
+		});
+
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <form id="passwdForm" method="POST" action="/passwd">
+            <h2>Please enter password to validate:</h2><br>
+            <input type="password" required name="passwd">
+            <input type="submit" value="Validate">
+            <br><br>
+            <label id="validationResponse"></label>
+        </form>
+    </div>
+</body>
+
+</html>
